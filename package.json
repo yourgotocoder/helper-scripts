@@ -1,0 +1,16 @@
+{
+  "name": "helper-scripts",
+  "version": "1.0.0",
+  "description": "A place to keep all my scripts before moving them to their own apis, for my sanity",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sudarshan Rai",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "mongodb": "^5.6.0",
+    "simple-excel-to-json": "^2.3.0"
+  }
+}
