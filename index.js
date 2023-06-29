@@ -11,7 +11,7 @@ const doThings = async () => {
     const _5thSemStudents = studentData.filter(
       (student) => student["CURRENT_SEM"] === 5
     );
-    const _6thSemStudents = studentData.filter(
+    const _7thSemStudents = studentData.filter(
       (student) => student["CURRENT_SEM"] === 7
     );
     /**
@@ -97,20 +97,86 @@ const doThings = async () => {
     //   );
     //   console.log(`${index + 1} of ${_5thSemStudents.length} done`);
     // }
-    for (const [index, student] of _5thSemStudents.entries()) {
-      let elective_4_options = [
-        { CODE: "CS1545/CS1404", TITLE: "Computer Graphics" },
-        { CODE: "CS1541/CS1633", TITLE: "Digital Image Processing" },
-        { CODE: "CS1537", TITLE: "Advanced Web Technologies" },
-        {
-          CODE: "CS1538/CS1601",
-          TITLE: "Object Oriented Analysis and Design using UML",
-        },
+    // for (const [index, student] of _5thSemStudents.entries()) {
+    //   let elective_4_options = [
+    //     { CODE: "CS1545/CS1404", TITLE: "Computer Graphics" },
+    //     { CODE: "CS1541/CS1633", TITLE: "Digital Image Processing" },
+    //     { CODE: "CS1537", TITLE: "Advanced Web Technologies" },
+    //     {
+    //       CODE: "CS1538/CS1601",
+    //       TITLE: "Object Oriented Analysis and Design using UML",
+    //     },
+    //   ];
+    //   if (student["MINOR_SPECIALIZATION"]) {
+    //     if (student["MINOR_SPECIALIZATION"] === "AI") {
+    //       elective_4_options = elective_4_options.filter(
+    //         (subject) => subject.CODE !== "CS1541/CS1633"
+    //       );
+    //     }
+    //   }
+    //   await collection.updateOne(
+    //     { REGNO: student.REGNO },
+    //     {
+    //       $set: {
+    //         ELECTIVE_4_OPTIONS: elective_4_options,
+    //       },
+    //     }
+    //   );
+    //   console.log(`${index + 1} of ${_5thSemStudents.length} done`);
+    // }
+    // const _7thData = xls2json.parseXls2Json("./resources/_7thList.xlsx")[0];
+    // for (let [index, student] of _7thData.entries()) {
+    //   const studentData = _7thSemStudents.find(
+    //     (s) => s.REGNO === student.REGNO
+    //   );
+    //   if (
+    //     studentData &&
+    //     student["Minor_Specialization"] &&
+    //     student["Minor_3_Code"] &&
+    //     student["Minor_4_Code"]
+    //   ) {
+    //     console.log(student.REGNO, student["Minor_Specialization"]);
+    //     await collection.updateOne(
+    //       { REGNO: student["REGNO"] },
+    //       {
+    //         $set: {
+    //           MINOR_3: {
+    //             CODE: student["Minor_3_Code"],
+    //             TITLE: student["Minor_3_Title"],
+    //           },
+    //           MINOR_4: {
+    //             CODE: student["Minor_4_Code"],
+    //             TITLE: student["Minor_2_Title"],
+    //           },
+    //         },
+    //       }
+    //     );
+    //   }
+    // }
+    for (const [index, student] of _7thSemStudents.entries()) {
+      const previousSubjects = [];
+      student["ELECTIVE_1"] &&
+        previousSubjects.push(`${student["ELECTIVE_1"]["CODE"]}`);
+      student["ELECTIVE_2"] &&
+        previousSubjects.push(`${student["ELECTIVE_2"]["CODE"]}`);
+      student["ELECTIVE_4"] &&
+        previousSubjects.push(`${student["ELECTIVE_4"]["CODE"]}`);
+      student["ELECTIVE_5"] &&
+        previousSubjects.push(`${student["ELECTIVE_5"]["CODE"]}`);
+      let elective_8_options = [
+        { CODE: "CS1756", TITLE: "R PROGRAMMING" },
+        { CODE: "CS1731", TITLE: "ADHOC WIRELESS NETWORKS" },
+        { CODE: "CS1641", TITLE: "SOCIAL NETWORK ANALYSIS" },
+        { CODE: "CS1743", TITLE: "CYBER SECURITY" },
+        { CODE: "CS1640/CS1758", TITLE: "COMPUTER VISION" },
       ];
+      elective_8_options = elective_8_options.filter(
+        (subject) => !previousSubjects.includes(subject.CODE)
+      );
       if (student["MINOR_SPECIALIZATION"]) {
-        if (student["MINOR_SPECIALIZATION"] === "AI") {
-          elective_4_options = elective_4_options.filter(
-            (subject) => subject.CODE !== "CS1541/CS1633"
+        if (student["MINOR_SPECIALIZATION"] === "CS") {
+          elective_8_options = elective_8_options.filter(
+            (subject) => subject.CODE !== "CS1743"
           );
         }
       }
@@ -118,11 +184,11 @@ const doThings = async () => {
         { REGNO: student.REGNO },
         {
           $set: {
-            ELECTIVE_4_OPTIONS: elective_4_options,
+            ELECTIVE_8_OPTIONS: elective_8_options,
           },
         }
       );
-      console.log(`${index + 1} of ${_5thSemStudents.length} done`);
+      console.log(`${index + 1} of ${_7thSemStudents.length} done`);
     }
   }
 };
